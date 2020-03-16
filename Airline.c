@@ -5,6 +5,87 @@
 #define fil 32
 char vuelo[5] = "";
 int asientos[32][6];
+char nuevoasig[3] = "";
+void Convertir( int f, int c)
+{
+    char numeros[2];
+    sprintf(numeros, "%d", f);
+    char letra[2];
+    if( c == 0)
+    {
+        letra[0] = 'A';
+    }
+    if( c == 1)
+    {
+       letra[0] = 'B';
+    }
+    if( c == 2)
+    {
+        letra[0] = 'C';
+    }
+    if( c == 3)
+    {
+        letra[0] = 'D';
+    }
+    if( c == 4)
+    {
+        letra[0] = 'E';
+    }
+    if( c == 5)
+    {
+        letra[0] = 'F';
+    }
+    strcat(nuevoasig, letra);
+    strcat(nuevoasig, numeros);
+
+}
+int Verificar(char asiento[3]) // 1: es vacío y correcto| 2: es lleno y correcto| 3: incorrecto ==== char string2 = {(char)M}; 70
+{
+    int devuelvo = 0; 
+    int M = 65;
+    int bal = 0;
+    int columna;
+    int fila;
+    for(int i = 0; M <= 70; M++, i++)
+    {   
+        char letra = {(char)(M)};
+        if(asiento[0] == letra)
+        {
+            bal = 1; 
+            columna = i;
+        }
+    } 
+    char numeros[2] = { asiento[1], asiento[2]};
+    int numero = atoi(numeros);
+    if(numero > 0 && numero <= 32 && bal == 1)
+    {
+        bal = 1;
+        fila = numero-1;
+    }
+    else 
+    {
+        bal = 0;
+    }
+    if( bal == 1)
+    {
+         if(asientos[fila][columna] == 0)
+         {
+             devuelvo = 1;
+             asientos[fila][columna] = 1;
+         }
+         else 
+         {
+             devuelvo = 2;
+         }
+    }
+    else 
+    {
+        devuelvo = 3;
+    }
+    
+    return devuelvo;
+
+}
 int main(void)
 {
   while(1)
@@ -30,7 +111,6 @@ int main(void)
             asientos[i][x] = 0;
         }
     }
-    
     while(1)
     {
         int respuesta;
@@ -38,7 +118,50 @@ int main(void)
         scanf("%d", &respuesta);
         if(respuesta == 1)
         {
+            while(1)
+            {
+                char asig[3] = "";
+                printf("Ingrese el asiento que desee: \n");
+                scanf("%s", asig);
+                int r = Verificar(asig);
+                if(r == 1)
+                {
+                    printf("Asiento %s reservado.\n", asig);
+                    break;
+                }
+                else if (r == 2)
+                {
+                    printf("Asiento %s ya ha sido reservado.\n", asig);
+                    int ban = 0;
+                    int filaS;
+                    int columS;
+                    for(int i = 0; i < 32; i++)
+                    {
+                        for(int x = 0; x < 6; x++)
+                        {
+                            if(asientos[i][x] == 0)
+                            {
+                                ban = 1;
+                                filaS = i +1 ;
+                                columS = x;
+                                break;
+                            }
+                        }
+                        if(ban == 1)
+                        {
+                            break;
+                        }
+                    }
+                    Convertir(filaS, columS);
+                    printf("El asiento %s está disponible.\n", nuevoasig);
 
+                }
+                else 
+                {
+                    printf("Asiento %s no existe. \n", asig);
+                }
+            }
+            
         }
         else if (respuesta == 2)
         {
