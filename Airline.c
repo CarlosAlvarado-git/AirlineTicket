@@ -6,6 +6,11 @@
 char vuelo[5] = "";
 int asientos[32][6];
 char nuevoasig[3] = "";
+int contador = 0;
+void clearscreen()
+{
+    system("@cls||clear");
+}
 void Convertir( int f, int c)
 {
     char numeros[2];
@@ -72,6 +77,7 @@ int Verificar(char asiento[3]) // 1: es vacío y correcto| 2: es lleno y correct
          {
              devuelvo = 1;
              asientos[fila][columna] = 1;
+             contador++;
          }
          else 
          {
@@ -118,6 +124,7 @@ int main(void)
         scanf("%d", &respuesta);
         if(respuesta == 1)
         {
+            //clearscreen();
             while(1)
             {
                 char asig[3] = "";
@@ -165,11 +172,63 @@ int main(void)
         }
         else if (respuesta == 2)
         {
+            //clearscreen();
+            int le = 65;
+            printf("|  |");
+            int ban = 1;
+            for(int i = -1; i < 32; i++)
+            {
+                for(int x = 0; x < 6; x++)
+                {
+                    if(i == -1)
+                    {
+                      
+                        char let = {(char)le};
+                        printf("|%c|", let);
+                        le++;
+                    }
+                    else
+                    {
+                        if(asientos[i][x] == 0)
+                        printf("|%d|", asientos[i][x]);
+                        else
+                        {
+                          printf("|x|");
+                        }
+                    }
+                    
+                }                
+                if(i >= 0 && i < 8)
+                {
+                  printf("\n");
+                  printf("|%d |", (i+2));
+                }
+                else if( i != -1 && i < 31)
+                {
+                  printf("\n");
+                  printf("|%d|", (i+2));
+                }
+                else if(ban == 1) 
+                {
+                    printf("\n");
+                    printf("|%d |", (i+2));
+                    ban = 0;
+                }   
+                else
+                {
 
+                }             
+            } 
+            printf("\n"); 
         }
         else if (respuesta == 3)
         {
-            /* code */
+            int todos = 192;
+            float promlibre = ((todos-contador)*100.00)/todos;
+            float promocup = ((contador)*100)/todos;
+            printf("#RESUMEN: \n");
+            printf("Asientos ocupados: %d de 192, [%f]\n", contador, promocup);
+            printf("Asientos disponibles: %d de 192, [%f]\n", (todos-contador), promlibre);
         }
         else if (respuesta == 4)
         {
@@ -178,10 +237,7 @@ int main(void)
         else
         {
             printf("Por favor sólo ingrese los números que aparecen en el menú");
-        }
-        
-        
-        
+        }        
     }
     return 0;
 }
