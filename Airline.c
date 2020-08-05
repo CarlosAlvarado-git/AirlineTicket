@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> 
 #include <stdlib.h>
 #include <string.h>
 #define colum 6
@@ -11,7 +11,7 @@ void clearscreen()
 {
     system("@cls||clear");
 }
-void Convertir( int f, int c)
+void Convertir( int f, int c)// esta funo
 {
     char numeros[2];
     sprintf(numeros, "%d", f);
